@@ -1,0 +1,5 @@
+build/
+*.egg-info/
+tw2/ckeditor/static
+*.py[co]
+__pycache__
