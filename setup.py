@@ -52,6 +52,7 @@ class generate_files_mixin(object):
         log.info("Extracting distribution")
         if os.path.exists(self.ckdistdir):
             rmtree(self.ckdistdir)
+        os.makedirs(self.staticdir)
         call(("tar", "-C", self.staticdir, "-xf", self.cktarball))
 
         log.info("Converting to purely LF line endings")
