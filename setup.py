@@ -42,7 +42,7 @@ class generate_files_mixin(object):
             "ckeditor_{}_dev.tar.gz".format(self.ckversion))
 
     def generate_distribution(self):
-        import jsmin, csscompressor
+        import six, jsmin, csscompressor
 
         log.info("Building JS distribution")
         call((
@@ -69,8 +69,13 @@ class generate_files_mixin(object):
                             'js', 'css', 'md', 'html', 'json', 'svg', 'txt')):
                     continue
                 tmppath = fpath + ".lfconvert"
-                with open(fpath) as f, open(tmppath, "w", newline="\n") as c:
-                    c.write(f.read())
+                if six.PY2:
+                    with open(fpath, "rU") as f, open(tmppath, "wb") as c:
+                        c.write(f.read())
+                else:
+                    with open(fpath) as f, open(
+                            tmppath, "w", newline="\n") as c:
+                        c.write(f.read())
                 origstat = os.stat(fpath)
                 tmpstat = os.stat(tmppath)
                 if origstat.st_size != tmpstat.st_size:
@@ -153,7 +158,7 @@ if __name__ == '__main__':
         author_email="nils@tiptoe.de",
         #url=
         #download_url=
-        setup_requires=["jsmin", "csscompressor"],
+        setup_requires=["six", "jsmin", "csscompressor"],
         install_requires=["tw2.core >= 2.0", "tw2.forms >= 2.0"],
         packages=find_packages(),
         namespace_packages=['tw2', 'tw2.ckeditor'],
