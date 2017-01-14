@@ -31,7 +31,7 @@ ckeditor_inline = js_function('CKEDITOR.inline')
 
 
 class CKEditorWidgetMixin(Widget):
-    
+
     resources = ckeditor_resources
 
     _editor_config = Param(
