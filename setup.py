@@ -21,8 +21,6 @@ class generate_files_mixin(object):
     ckbuildscript = os.path.join(ckbuilddir, "build.sh")
 
     ckversion = json.load(open(os.path.join(ckdir, "package.json")))['version']
-    cktarball = os.path.join(
-        ckbuilddir, "release", "ckeditor_{}_dev.tar.gz".format(ckversion))
 
     ckdistdir = os.path.join(here, staticdir, "ckeditor")
     ckdistmindir = os.path.join(here, staticdir, "ckeditor-min")
@@ -37,9 +35,12 @@ class generate_files_mixin(object):
 
     @property
     def cktarball(self):
-        return os.path.join(
-            self.ckbuilddir, "release",
-            "ckeditor_{}_dev.tar.gz".format(self.ckversion))
+        for dev in ("", "_dev"):
+            tbpath = os.path.join(
+                self.ckbuilddir, "release", "ckeditor_{}{}.tar.gz".format(
+                    self.ckversion, dev))
+            if os.path.isfile(tbpath):
+                return tbpath
 
     def generate_distribution(self):
         import six, jsmin, csscompressor
