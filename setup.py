@@ -161,7 +161,6 @@ if __name__ == '__main__':
         setup_requires=["six", "jsmin", "csscompressor"],
         install_requires=["tw2.core >= 2.0", "tw2.forms >= 2.0"],
         packages=find_packages(),
-        namespace_packages=['tw2', 'tw2.ckeditor'],
         zip_safe=False,
         include_package_data=True,
         #test_suite='nose.collector'
